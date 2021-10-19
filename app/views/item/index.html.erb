@@ -1,0 +1,36 @@
+
+
+<ul class="list-group list-group-flush">
+  <% @items.each do |i| %>
+    <li class="list-group-item">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-8 start">
+            <h2><%= link_to i.name, item_path(i), class: "card-title" %></h2>
+            <p class="card-text"><%= i.description %></p>
+            <p class="text-muted"><%= i.price %></p>
+          </div>
+          <div class="col-4 align-self-center text-end">
+            <% if user_signed_in? and current_user.role == 'admin' %>
+              <%= link_to "Delete", item_path(i), method: :delete, data: { confirm: "Delete?"}, class: "btn btn-outline-danger" %>
+              <%= link_to "Edit", edit_item_path(i), method: :get, class: "btn btn-outline-warning" %>
+            <% end %>
+            <% if user_signed_in? %>
+              <%= form_with url: '/order', method: :post do |f| %>
+                <%= hidden_field_tag("item_id", i.id)%>
+                <%= f.number_field :quantity %>
+                <%= f.submit "Buy", class: "btn btn-outline-success" %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+        <%= i.created_at.to_date.strftime("%d %B %Y") %>
+      </div>
+    </li>
+
+  <% end %>
+</ul>
+
+
