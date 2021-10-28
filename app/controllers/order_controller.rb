@@ -1,14 +1,20 @@
 class OrderController < ApplicationController
 
-  # before_action :authenticate!, only: [:create, :index, :show]
   before_action :authenticate_user, only: [:index, :show, :create]
 
   def index
-    @orders = Order.where(user_id: current_user.id)
+    if current_user.role == "admin"
+      @orders = Order.all
+    end
+      @orders = Order.where(user_id: current_user.id)
+    # @orders = Order.all
   end
 
   def show
-    unless @order = Order.where(id: params[:id]).first
+    @order = Order.where(id: params[:id]).first
+    if @order
+      render 'order/show'
+    else
       render_404
     end
   end

@@ -55,6 +55,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'pg', '~> 1.2', '>= 1.2.3'
 
 gem 'devise'
+gem 'active_model_serializers', '~> 0.10.2'
 
 gem 'bootstrap', '~> 5.1.0'
 gem 'jquery-rails'
+
+gem 'react-rails', '~> 2.6', '>= 2.6.1'

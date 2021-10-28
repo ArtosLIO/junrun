@@ -1,13 +1,17 @@
-<h1>Number order: <%= @order.id %></h1>
-<h2><%= link_to @order.orders_description.item.name, item_path(@order.orders_description.item_id) %></h2>
 
-<ul>
-  <li>Quantity: <%= @order.orders_description.quantity %></li>
-  <li>Amount: <%= @order.amount %> grn</li>
-  <% if current_user.role == 'admin' %>
-    <li>User email: <%= link_to @order.user.email, edit_user_registration_path(@order.user_id) %></li>
-  <% end %>
-</ul>
-<%= link_to "Back", :back, class: "btn btn-outline-danger" %>
+<%= react_component("ShowOrder", { order: @order, user: current_user, order_description: @order.orders_description,
+                                   item: @order.orders_description.item }) %>
+
+<!--<h1>Number order: <%#= @order.id %></h1>-->
+<!--<h2><%#= link_to @order.orders_description.item.name, item_path(@order.orders_description.item_id) %></h2>-->
+
+<!--<ul>-->
+<!--  <li>Quantity: <%#= @order.orders_description.quantity %></li>-->
+<!--  <li>Amount: <%#= @order.amount %> grn</li>-->
+  <%# if current_user.role == 'admin' %>
+<!--    <li>User email: <%#= link_to @order.user.email, edit_user_registration_path(@order.user_id) %></li>-->
+  <%# end %>
+<!--</ul>-->
+<%#= link_to "Back", :back, class: "btn btn-outline-danger" %>
 
 

@@ -10,7 +10,9 @@ class ItemController < ApplicationController
 
   # /item/1 GET
   def show
-    unless @item
+    if @item
+      render 'show'
+    else
       render 'item/s404', status: 404
     end
   end
@@ -52,8 +54,12 @@ class ItemController < ApplicationController
 
   # /item/1 DELETE
   def destroy
-    @item.destroy
-    redirect_to action: "index"
+    if @order_description = OrdersDescription.where(item_id: params[:id])
+      render 'item/index', status: 501
+    else
+      @item.destroy
+    end
+    # redirect_to action: "index"
   end
 
   private

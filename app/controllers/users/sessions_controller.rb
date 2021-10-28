@@ -3,7 +3,7 @@
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
-  before_action :check_if_admin, only: [:index, :show, :update]
+  before_action :check_if_admin, only: [:index]
 
 
   def index
@@ -11,8 +11,12 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def show
-    unless @user = User.where(id: params[:id]).first
-      render 'item/s404', status: 404
+    if current_user.role == "admin"
+      unless @user = User.where(id: params[:id]).first
+        render 'item/s404', status: 404
+      end
+    else
+      @user = User.where(id: current_user.id).first
     end
   end
 
@@ -23,7 +27,7 @@ class Users::SessionsController < Devise::SessionsController
                  last_name: user_params[:last_name],
                  email: user_params[:email])
     if @user.errors.empty?
-      redirect_to users_list_path
+      redirect_to item_index_path
     else
       render show_user_path(@user)
     end
